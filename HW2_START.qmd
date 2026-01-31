@@ -21,7 +21,7 @@ All written responses must be written independently (in your own words).
 
 Keep your work readable: Use clear headings and label plot elements thoughtfully.
 
-Assignment submission (YOUR NAME): Sofia Rodas
+Assignment submission: Sofia Rodas
 
 ------------------------------------------------------------------------
 
@@ -86,11 +86,12 @@ library(scales) # plotting
 **1A.Q1** Summarize the environmental policy issue, the outcome of interest, and the intervention being evaluated. 
 Be sure to include a brief description of each of the following key elements of the study: unit of analysis, outcome, treatment, comparison group): 
 
-*Response:* _________________________
+*Response:* Stokes (2015) investigates whether the proposition and construction of wind turbines negatively impacts voting outcomes for political parties that support green energy construction. The unit of analysis is the differences in the voting trends for the Liberal party. The outcome based on both the fixed-effects model and the instrumental vairable model is that there is a reduction in the percent of votes that the Liberal party receives from communities with wind turbines compared to the pre-treatment voting outcomes for the Liberal party. In locations where wind turbines are proposed there is between a 4% and 8% reduction in the Liberal party's vote share. In locations where wind turbines are operational, there is between a 7% and 10% reduction in the Liberal party's vote share. The treatment group are the portions in the 26 districts of interest that have either proposed or operational wind turbines. The comparison group are the portions in the 26 districts of interest that do not have proposed or operational wind turbines. 
 
-**1A.Q2** Why might turbine proposals be correlated with baseline political preferences or rural areas? Provide 2 plausible mechanisms, and explain why that creates confounding.
+**1A.Q2** Why might turbine proposals be correlated with baseline political preferences or rural areas? Provide 2 plausible mechanisms, and explain why that creates confounding effects.
 
-*Response:* _________________________
+*Response:* Baseline political preferences could be correlated with communities that......
+Rural areas typically have more space for development making them areas of greater interest for wind turbine development. This would also correlate with more rural communities potentially opposing wind turbine development. 
 
 ------------------------------------------------------------------------
 
@@ -98,15 +99,15 @@ Be sure to include a brief description of each of the following key elements of 
 
 **1B.Q1**  What is the key identifying assumption for a fixed effects / Difference-in-Difference design? Explain how this assumption when satisfied provides evidence of causal effect: 
 
-*Response:* _________________________
+*Response:* Fixed effects rely on a parallel trends assumption. When this assumption is satisfied the trends in the treatment and control were parallel before the treatment effect were applied. 
 
 **1B.Q2**  What is the reason for using a fixed effects approach from a causal inference perspective? Summarize within the context of study (in your own words).
 
-*Response:* _________________________
+*Response:* Fixed effects is a powerful tool for determining causal inference because it does not require random assignment to determine causal inference. Wind turbines were proposed and constructed in locations with the best wind resources and were not randomly placed. Other causal inference determining tools could not be used to identify causal infterence since random assignment was not applied to site choice. 
 
 **1B.Q3** What part of the SUTVA assumption is most likely violated in the context of this study design (and why)?
 
-*Response:* _________________________
+*Response:* SUTVA
 
 **1B.Q4**  Why does spillover matter when estimating an unbiased treatment effect? 
 
