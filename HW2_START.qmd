@@ -159,18 +159,32 @@ match_data <- read_csv(here::here("data", "Stokes15_survey2007.csv")) |>
 
 ```{r}
 
-match_data %>%
+match_data |> 
+     select(log_home_val_07, 
+            p_uni_degree, 
+            log_median_inc, 
+            log_pop_denc, 
+            proposed_turbine_3km) |> 
+    tbl_summary(
+    by = proposed_turbine_3km,
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    )
+  )  |> 
+  modify_header(label ~ "**Covariate**") |>
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Group**")
 
 ```
 
 
 **2B.Q1** Summarize the table output: Which covariates look balanced/imbalanced?
 
-*Response:* _________________________
+*Response:* The covariates `log_home_val_07` and `log_median_inc` look balanced. The covariate `p_uni_degree` and `log_pop_denc` is imbalanced between the treatment and control group.
 
 **2B.Q2** Describe in your own words why these covariates might be expected to confound the treatment estimate: 
 
-*Response (2-4 sentences):* _________________________
+*Response (2-4 sentences):* If locations have different socioeconomic 
 
 ------------------------------------------------------------------------
 
