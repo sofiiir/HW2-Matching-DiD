@@ -566,7 +566,7 @@ See vignette here: [fixest walkthrough](https://cran.r-project.org/web/packages/
 
 ```{r}
 
-model2_ff <- feols(perc_lib ~ proposed_turbine + precinct_id + year,
+model2_ff <- feols(perc_lib ~ proposed_turbine | precinct_id + year,
                    data = panel_data)
 
 summary(model2_ff, model.fit = FALSE)
@@ -584,7 +584,7 @@ In panel data settings, why is clustering by precinct important (i.e., `cluster 
 
 ```{r}
 
-model3_ff <- feols(perc_lib ~ operational_turbine + precinct_id + year,
+model3_ff <- feols(perc_lib ~ operational_turbine | precinct_id + year,
                    data = panel_data)
 
 summary(model3_ff, model.fit = FALSE)
@@ -597,7 +597,7 @@ summary(model3_ff, model.fit = FALSE)
 
 **3E.Q2:** Why do you think the effect of proposed wind turbines is different from operational wind turbines. Develop your own theory about why incumbent vote share is affected in this way. Use the Stokes (2015) study to inform your response as needed. 
 
-*Response:* _________________________
+*Response:* More people are aware of wind turbines once they are built. When wind turbines are only proposed those individuals that are most aware about public policy are the ones that may be swayed to vote against the Liberal party. When the world can see them standing more people are aware and may have negative sentiments about the actions of the Liberal party. 
 
 
 ------------------------------------------------------------------------
