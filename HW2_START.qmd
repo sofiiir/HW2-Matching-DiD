@@ -107,9 +107,9 @@ Rural areas typically have more space for development making them areas of great
 
 **1B.Q3** What part of the SUTVA assumption is most likely violated in the context of this study design (and why)?
 
-*Response:* SUTVA's assumption that there are no-hidden variations between the treatment is likely violated in the context of this design. There are likely differences in the number of wind turbines in different regions creating variations in the effect it has on communities. Though the paper states that it distinguishes between micro and macro wind turbine contracts and only includes operations with 10 megatwatts or higher, there may be variations. 
+*Response:*  SUTVA's assumption that there is no interference between one units treatment and another treatments outcome is violated in this study. The wind turbines are large and can be seen at a distance. Some individuals that are in control groups can likely see the wind turbines from their homes and may have negative sentiments about the Liberal party's involvement in allowing wind turbines to be built. This interference is addressed in this study by analyzing areas within a 3km radius of the proposed and operational wind turbines to assess their effect on the control's outcome. 
 
-SUTVA's assumption that there is no interference between one units treatment and another treatments outcome is addressed in this study by analyzing areas that within a 3km radius of the proposed and operational wind turbines. 
+SUTVA's assumption that there are no-hidden variations between the treatment is likely violated in the context of this design. There are likely differences in the number of wind turbines in different regions creating variations in the effect it has on communities. Though the paper states that it distinguishes between micro and macro wind turbine contracts and only includes operations with 10 megatwatts or higher, there may be variations.
 
 **1B.Q4**  Why does spillover matter when estimating an unbiased treatment effect? 
 
@@ -184,13 +184,13 @@ match_data |>
 
 **2B.Q2** Describe in your own words why these covariates might be expected to confound the treatment estimate: 
 
-*Response (2-4 sentences):* If locations have different socioeconomic 
+*Response (2-4 sentences):* Some previous studies, as mentioned in Stokes (2015), have found that locations with less wealth are more likely to have less opposition to wind turbine projects. Additionally, wind turbines are more likely to be constructed in more rural areas with less space, and likely less population density. 
 
 ------------------------------------------------------------------------
 
 **2B.Q3** Intuition check: What type of data do you need to conduct a matching analysis? 
 
-*Response:* _________________________
+*Response:* A dummy variable is required to conduct a matching analysis. This variable defines whether an observation is part of the control or treatment group. 
 
 ------------------------------------------------------------------------
 
@@ -221,6 +221,7 @@ set.seed(2412026)
 
 match_model <- matchit(
      # Treatment_indicator ~  Pre_treatment_covariates
+    proposed_turbine_3km ~ log_home_val_07 + p_uni_degree + log_median_inc + log_pop_denc, 
   data = match_data, 
   method = "nearest",       # Nearest neighbor matching
   distance = "mahalanobis", # Mahalanobis distance
@@ -239,7 +240,7 @@ summary(match_model)
 
 **2C.Q1** Using the `summary()` output: Which covariate had the largest and smallest `Std. Mean Diff.` before matching. Next, compare largest/smallest `Std. Mean Diff.` after matching. 
 
-*Response:* _________________________
+*Response:* Before matching, `log_pop_denc` had the largest absolute value `Std. Mean Diff.` and `log_median_inc` had the smallest absolute `Std. Mean Diff.`. After matching `log_pop_denc` had the largest absolute value `Std. Mean Diff.` and `log_median_inc` had the smallest absolute `Std. Mean Diff.`. Though the covariates with the largest and smallest `Std. Mean Diff.` remain the same before and after matching, the values are much smaller after matching. 
 
 
 ------------------------------------------------------------------------
@@ -273,7 +274,7 @@ love.plot(match_model, stats = "mean.diffs",
 
 **2D.Q1** Interpret the love plot in your own words:
 
-*Response:* _________________________
+*Response:* The love plot clearly shows that the unadjusted covariate standardized mean differences are not within the threshold line of 0.1. Once the matching is completed the covariates adjusted standardized mean differences are within the threshold line of 0.1.
 
 ------------------------------------------------------------------------
 
@@ -290,7 +291,19 @@ love.plot(match_model, stats = "mean.diffs",
 
 set.seed(2412026)
 
-propensity_scores <- 
+propensity_scores <- matchit(
+     # Treatment_indicator ~  Pre_treatment_covariates
+    proposed_turbine_3km ~ log_home_val_07 + p_uni_degree + log_median_inc + log_pop_denc, 
+  data = match_data, 
+  method = "nearest",       # Nearest neighbor matching
+  distance = "logit", # logit distance
+  ratio = 1,                # Match one control unit to one treatment unit (1:1 matching)
+  replace = FALSE           # Control observations are not replaced
+)
+
+# Extract matched data
+propensity_scores_data <- match.data(propensity_scores)
+
     
 ```
 
@@ -311,7 +324,7 @@ bal.tab(propensity_scores,
 
 **2E.Q1** Compare Mahalanobis vs propensity score matching. Which method did a better job at achieving balance?
 
-*Response:* _________________________
+*Response:* The `Std. Mean Diff.`are smaller in the Mahalanobis matching in comparison to the `Diff. Adj` from running the propensity score matching. The Mahalanobis method did a better job of achieving balance. 
 
 ------------------------------------------------------------------------
 
@@ -321,9 +334,10 @@ Using the matched data (Mahalanobis method), estimate the effect of treatment on
 
 ```{r}
 
-reg_match <- 
+reg_match <- lm(change_liberal ~ proposed_turbine_3km,
+                     data = matched_data)
 
-#summ(, model.fit = FALSE)
+summ(reg_match, model.fit = FALSE)
 ```
 
 **2F.Q1** Have you identified a causal estimate using this approach: Why or why not? 
@@ -332,11 +346,11 @@ reg_match <-
 
 **2F.Q2** When using a matching method, what is the main threat to causal identification?
 
-*Response:* _________________________
+*Response:* There may be unobserved confounding variables and therefore these variables would still be unmatched.
 
 **2F.Q3** Describe why the treatment estimate represents the `Average Treatment for the Treated (ATT)` and explain why this is the case relative to estimation of the `Average Treatment Effect (ATE)`.
 
-*Response:* _________________________
+*Response:* This analysis is focused on estimating the treatment effect for treated observations only and does not make inferences based on the full sample making it the Average Treatment for the Treated (ATT). The Average Treatment Effect (ATE) would be representative of the full sample, both treatment and control groups. 
 
 ------------------------------------------------------------------------
 
@@ -350,26 +364,38 @@ reg_match <-
 
 ```{r}
 
-panel_data <- 
+panel_data <- read_csv(here::here("data", "Stokes15_panel_data.csv")) |> 
+    mutate(precinct_id = as.factor(precinct_id)) |> 
+    mutate(year = as.factor(year))
+
 
 # HINT: Try running `tabyl(panel_data$year)`. Review article to make sense of the row numbers (n).
-
+tabyl(panel_data$year)
 ```
 
 **3A.Q1:** Why are there 18,558 rows in `panel_data`?
 
-*Response:* _________________________
+*Response:* This study includes 6,186 precincts and each precinct has data for each of the three years hence the total number of rows is 18,558.
 
 ```{r}
 # How many years are included in the panel?
+paste0("There are ", length(unique(panel_data$year)), " years included in the panel.")
 
 # How many precincts are there?
+paste0("There are ", length(unique(panel_data$precinct_id)), " precincts included in the panel.")
 
+# unique precincts treated
+uniq_treated <- panel_data |> 
+    group_by(precinct_id) |> 
+    filter(proposed_turbine == 1 | operational_turbine == 1) |> 
+    ungroup()
+
+paste0("There are ",length(unique(uniq_treated$precinct_id)), " unique precincts treated.")
 ```
 
 **3A.Q2:** How many unique precincts are *ever treated* (i.e., `proposed` & `operational`)?
 
-*Response:* _________________________
+*Response:* There are 184 unique precincts treated as coded above. According to Stokes (2015), 184 precincts were treated with a proposal and 52 precincts had an operational turbine by 2011. All 52 precincts that have operational wind turbines also were also coded as having proposed turbines hence these values are not added together. 
 
 ```{r}
 
@@ -451,7 +477,7 @@ ggplot(aes(year, mean, color = status, group = status)) +
 
 **3B.Q1:** Write a short paragraph assessing the parallel trends assumption for each outcome.
 
-*Response (4-6 sentences):* _________________________
+*Response (4-6 sentences):* Before 2007, the control and treated groups had parallel trends in both regions where the wind turbines were proposed and where wind turbines were operational. These groups follow the same slopes in relation to the number of vote shares for the Liberal Party. The changes took place after 2007 which is in line with the timing of the treatment change. The Liberal government first enacted the "Feed in Tarff" (FIT) in 2006 and expanded the FIT in 2009 directly correlating with the decline of the Liberal Party's vote shares. 
 
 ------------------------------------------------------------------------
 
@@ -504,13 +530,14 @@ sample_40_precincts <- panel_data %>%
 #### **3C:** Estimate a fixed effects model using `lm()` with fixed effects added for `precinct` and `year` using the sample of 40 precincts just created.
 
 ```{r}
-model1_ff <- 
+model1_ff <- lm(perc_lib ~ proposed_turbine + precinct_id + year,
+                data = sample_40_precincts)
 
-# summ(*** , model.fit = FALSE)
+summ(model1_ff, model.fit = FALSE, digits = 3)
 ```
 
 ```{r}
-# summ(*** , model.fit = FALSE, [. . .])
+summ(model1_ff, model.fit = FALSE, digits = 3, robust = TRUE)
 ```
 
 **3C.Q1:** Intuition check: Is the *signal-to-noise* ratio for the treatment estimate greater than *2-to-1*?
@@ -539,9 +566,10 @@ See vignette here: [fixest walkthrough](https://cran.r-project.org/web/packages/
 
 ```{r}
 
-model2_ff <- 
+model2_ff <- feols(perc_lib ~ proposed_turbine + precinct_id + year,
+                   data = panel_data)
 
-summary()
+summary(model2_ff, model.fit = FALSE)
 ```
 
 **3D.Q1:** Interpret the model results and translate findings to be clear to an audience that may not have a background in causal inference (Econometrics) methods.
@@ -556,9 +584,10 @@ In panel data settings, why is clustering by precinct important (i.e., `cluster 
 
 ```{r}
 
-model3_ff <- 
+model3_ff <- feols(perc_lib ~ operational_turbine + precinct_id + year,
+                   data = panel_data)
 
-summary()
+summary(model3_ff, model.fit = FALSE)
 ```
 
 
