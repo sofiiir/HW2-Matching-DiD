@@ -139,7 +139,7 @@ We will start by evaluating the 2007 survey (cross-sectional) data. Treatment is
 
 match_data <- read_csv(here::here("data", "Stokes15_survey2007.csv")) |> 
     mutate(precinct_id = as.factor(precinct_id)) |> 
-    mutate(district_id = as.factor(district_id))
+    mutate(district_id = as.factor(district_id)) 
     
 ```
 
@@ -342,7 +342,7 @@ summ(reg_match, model.fit = FALSE)
 
 **2F.Q1** Have you identified a causal estimate using this approach: Why or why not? 
 
-*Response:* _________________________
+*Response:* Controlling for what is observable may not be enough to identify causal estimates. Confounding variables that are unobservable can be affecting the outcome of the change in liberal votes. 
 
 **2F.Q2** When using a matching method, what is the main threat to causal identification?
 
@@ -542,13 +542,13 @@ summ(model1_ff, model.fit = FALSE, digits = 3, robust = TRUE)
 
 **3C.Q1:** Intuition check: Is the *signal-to-noise* ratio for the treatment estimate greater than *2-to-1*?
 
-*Response:* _________________________
+*Response:* The signal here refers to the `Est` of the `beta1` while the `S.E.` of the `beta1`. Since the value is estimate is larger than double the standard error it is likely not significant. This is also supported by the `p-value` being larger than 0.05 which means it is not statistically significant.
 
 > HINT: Add the argument `digits = 3` to the `summ()` function above
 
 **3C.Q2:** Re-run the `summ()` function using the *heteroscedasticiy robust standard error adjustment* (`robust = TRUE`). Did the standard error (S.E.) estimates change? Explain why. 
 
-*Response:* _________________________
+*Response:* The standard error gets larger. 
 
 **3C.Q3:** Compare results of the model above to the findings from the fixed effects analysis in the Stokes (2015) study. Why might the results be similar or different? 
 
@@ -569,14 +569,14 @@ See vignette here: [fixest walkthrough](https://cran.r-project.org/web/packages/
 model2_ff <- feols(perc_lib ~ proposed_turbine | precinct_id + year,
                    data = panel_data)
 
-summary(model2_ff, model.fit = FALSE)
+summary(model2_ff, cluster = ~precinct_id) # adjusts the standard errors to account for non-indep
 ```
 
 **3D.Q1:** Interpret the model results and translate findings to be clear to an audience that may not have a background in causal inference (Econometrics) methods.
 
 In panel data settings, why is clustering by precinct important (i.e., `cluster = ~precinct_id`) ?”
 
-*Response (4-6 sentences):* _________________________
+*Response (4-6 sentences):* Proposed turbines on average result in a 4% decrease in the percent of liberal votes per precinct when compared to the percent of liberal votes in precincts when no wind turbines are proposed. Clustering by `precinct_id` is important because it clusters the standard errors
 
 ------------------------------------------------------------------------
 
@@ -587,7 +587,7 @@ In panel data settings, why is clustering by precinct important (i.e., `cluster 
 model3_ff <- feols(perc_lib ~ operational_turbine | precinct_id + year,
                    data = panel_data)
 
-summary(model3_ff, model.fit = FALSE)
+summary(model3_ff, cluster = ~precinct_id)
 ```
 
 
