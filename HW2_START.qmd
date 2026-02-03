@@ -554,9 +554,9 @@ summ(model1_ff, model.fit = FALSE, digits = 3, robust = TRUE)
 
 *Response:* _________________________
 
-**3C.Q4:** In your own words, explain why it is advantageous from a causal inference perspective to include year and precinct fixed effects. Explain how between-level and within-level variance is relevant to the problem of omitted variable bias (OVB). 
+**3C.Q4:** In your own words, explain why it is advantageous from a causal inference perspective to include year and precinct fixed effects. Explain how **between-level** and **within-level** variance is relevant to the problem of omitted variable bias (OVB). 
 
-*Response (2-4 sentences):* _________________________
+*Response (2-4 sentences):* There may be confounding variables based on year and precinct. For example, if a candidate is from a specific precinct that could influence more individuals to vote for them regardless of whether there are proposed or operational turbines. The year could also effect people's political views such as a possible increase in conservatism after the 2008 recession. 
 
 ------------------------------------------------------------------------
 
