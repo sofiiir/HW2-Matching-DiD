@@ -530,7 +530,7 @@ sample_40_precincts <- panel_data %>%
 #### **3C:** Estimate a fixed effects model using `lm()` with fixed effects added for `precinct` and `year` using the sample of 40 precincts just created.
 
 ```{r}
-model1_ff <- lm(perc_lib ~ proposed_turbine + precinct_id + year,
+model1_ff <- lm(perc_lib ~ proposed_turbine + operational_turbine + precinct_id + year,
                 data = sample_40_precincts)
 
 summ(model1_ff, model.fit = FALSE, digits = 3)
@@ -552,7 +552,7 @@ summ(model1_ff, model.fit = FALSE, digits = 3, robust = TRUE)
 
 **3C.Q3:** Compare results of the model above to the findings from the fixed effects analysis in the Stokes (2015) study. Why might the results be similar or different? 
 
-*Response:* _________________________
+*Response:* The results of the model above are similar to the values in Stokes (2015), however, these values are not statistically significant while the findings in Stokes (2015) are significant. One reason the results may be slightly different but in the same range of what Stokes (2015) finds is that running the model on a sample of 40 is likely not large enough. Though its impractical to run the analysis on the entirety of the data, it would yield more accurate results. Outliers could have a greater influence on the model's outputs. 
 
 **3C.Q4:** In your own words, explain why it is advantageous from a causal inference perspective to include year and precinct fixed effects. Explain how **between-level** and **within-level** variance is relevant to the problem of omitted variable bias (OVB). 
 
@@ -597,7 +597,7 @@ summary(model3_ff, cluster = ~precinct_id)
 
 **3E.Q2:** Why do you think the effect of proposed wind turbines is different from operational wind turbines. Develop your own theory about why incumbent vote share is affected in this way. Use the Stokes (2015) study to inform your response as needed. 
 
-*Response:* More people are aware of wind turbines once they are built. When wind turbines are only proposed those individuals that are most aware about public policy are the ones that may be swayed to vote against the Liberal party. When the world can see them standing more people are aware and may have negative sentiments about the actions of the Liberal party. 
+*Response:* More people are aware of wind turbines once they are built. When wind turbines are only proposed those individuals that are most aware about public policy are the ones that may be swayed to vote against the Liberal party. When the world can see them standing more people may have negative sentiments about the actions of the Liberal party. This phenomenon was mentioned in Stokes (2015), as it was noted that people from different precincts could potentially see these turbines from their own communities and have a similar treatment to those that live within the precinct where turbines are placed. 
 
 
 ------------------------------------------------------------------------
