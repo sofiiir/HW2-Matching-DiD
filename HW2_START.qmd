@@ -86,12 +86,11 @@ library(scales) # plotting
 **1A.Q1** Summarize the environmental policy issue, the outcome of interest, and the intervention being evaluated. 
 Be sure to include a brief description of each of the following key elements of the study: unit of analysis, outcome, treatment, comparison group): 
 
-*Response:* Stokes (2015) investigates whether the proposition and construction of wind turbines negatively impacts voting outcomes for political parties that support green energy construction. The unit of analysis is the differences in the voting trends for the Liberal party. The outcome based on both the fixed-effects model and the instrumental vairable model is that there is a reduction in the percent of votes that the Liberal party receives from communities with wind turbines compared to the pre-treatment voting outcomes for the Liberal party. In locations where wind turbines are proposed there is between a 4% and 8% reduction in the Liberal party's vote share. In locations where wind turbines are operational, there is between a 7% and 10% reduction in the Liberal party's vote share. The treatment group are the portions in the 26 districts of interest that have either proposed or operational wind turbines. The comparison group are the portions in the 26 districts of interest that do not have proposed or operational wind turbines. 
+*Response:* Stokes (2015) investigates whether the proposition and construction of wind turbines negatively impacts voting outcomes for political parties that support green energy construction, in this case the Liberal party. The unit of analysis is the differences in the voting trends for the Liberal party between the treated (those with proposed and operational wind turbines) and the control (those without proposed or operational wind turbines). The outcome based on both the fixed-effects model and the instrumental variable model is that there is a reduction in the percent of votes that the Liberal party receives from communities with wind turbines compared to the pre-treatment voting outcomes for the Liberal party. In locations where wind turbines are proposed there is between a 4% and 8% reduction in the Liberal party's vote share. In locations where wind turbines are operational, there is between a 7% and 10% reduction in the Liberal party's vote share. The treatment group are the precincts in the 26 districts of interest that have either proposed or operational wind turbines. The comparison group are the precincts in the 26 districts of interest that do not have proposed or operational wind turbines. 
 
 **1A.Q2** Why might turbine proposals be correlated with baseline political preferences or rural areas? Provide 2 plausible mechanisms, and explain why that creates confounding effects.
 
-*Response:* Baseline political preferences could be correlated with communities that......
-Rural areas typically have more space for development making them areas of greater interest for wind turbine development. This would also correlate with more rural communities potentially opposing wind turbine development. 
+*Response:* Baseline political preferences could be correlated with turbine proposals because some communities may support green energy more than others. These locations may be more likely to have proposed wind turbines. Rural areas typically have more space for development making them areas of greater interest for wind turbine development. Political preferences and rural areas could be confounding variables because these would likely effect both where proposed turbines would be placed and how people in these communities vote. Confounding variables hide the true relationship between the study of interest when not accounted for.
 
 ------------------------------------------------------------------------
 
@@ -99,17 +98,17 @@ Rural areas typically have more space for development making them areas of great
 
 **1B.Q1**  What is the key identifying assumption for a fixed effects / Difference-in-Difference design? Explain how this assumption when satisfied provides evidence of causal effect: 
 
-*Response:* Fixed effects rely on a parallel trends assumption. When this assumption is satisfied the trends in the treatment and control were parallel before the treatment effect were applied. 
+*Response:* Fixed effects rely on a parallel trends assumption. When this assumption is satisfied the trends in the treatment and control were parallel before the treatment effect were applied. This assumption attempts to make an apples-to-apples comparison by concluding that the confounding variables are not significantly impacting the differences in the treatment and control groups. 
 
 **1B.Q2**  What is the reason for using a fixed effects approach from a causal inference perspective? Summarize within the context of study (in your own words).
 
-*Response:* Fixed effects is a powerful tool for determining causal inference because it does not require random assignment to determine causal inference. Wind turbines were proposed and constructed in locations with the best wind resources and were not randomly placed. Other causal inference determining tools could not be used to identify causal infterence since random assignment was not applied to site choice. 
+*Response:* Fixed effects is a powerful tool for determining causal inference because it does not require random assignment to determine causal inference. Wind turbines were proposed and constructed in locations with the best wind resources and were not randomly placed. Other causal inference determining tools could not be used to identify causal inference since random assignment was not applied to site choice. 
 
 **1B.Q3** What part of the SUTVA assumption is most likely violated in the context of this study design (and why)?
 
 *Response:*  SUTVA's assumption that there is no interference between one units treatment and another treatments outcome is violated in this study. The wind turbines are large and can be seen at a distance. Some individuals that are in control groups can likely see the wind turbines from their homes and may have negative sentiments about the Liberal party's involvement in allowing wind turbines to be built. This interference is addressed in this study by analyzing areas within a 3km radius of the proposed and operational wind turbines to assess their effect on the control's outcome. 
 
-SUTVA's assumption that there are no-hidden variations between the treatment is likely violated in the context of this design. There are likely differences in the number of wind turbines in different regions creating variations in the effect it has on communities. Though the paper states that it distinguishes between micro and macro wind turbine contracts and only includes operations with 10 megatwatts or higher, there may be variations.
+SUTVA's assumption that there are no-hidden variations between the treatment is also likely violated in the context of this design. There are likely differences in the number of wind turbines in different regions creating variations in the effect it has on communities. Though the paper states that it distinguishes between micro and macro wind turbine contracts and only includes operations with 10 megatwatts or higher, there may be variations.
 
 **1B.Q4**  Why does spillover matter when estimating an unbiased treatment effect? 
 
@@ -117,7 +116,7 @@ SUTVA's assumption that there are no-hidden variations between the treatment is 
 
 **1B.Q5** How do the authors assess the risk of spillovers, and what analytic choice do they make to attempt to mitigate the risk that spillover biases the causal estimate?
 
-*Response:* The risk of spillover is addressed in this study by analyzing areas that are within a 3km radius of the proposed and operational wind turbines. This increases the number of treated groups with the paper stating that the negative effect of communities "punishing" the Liberal Party being at the upper bounds of the estimate. 
+*Response:* The risk of spillover is addressed in this study by analyzing areas at 1km , 2km, 3km, 4km, and 5km radius of the proposed and operational wind turbines. They found statistical significance in changes in votes for the Liberal party within a 3km radius of wind turbines. The paper states that the negative effect of communities "punishing" the Liberal Party is at the upper bounds of the estimate based on this added spillover analysis. 
 
 ------------------------------------------------------------------------
 
@@ -146,7 +145,7 @@ match_data <- read_csv(here::here("data", "Stokes15_survey2007.csv")) |>
 
 **2A.Q1** Intuition check: **Why match?** Explain rationale for using this method. 
 
-*Response:* The matching method is used to better fit the data for the fixed effect. Matching is done to minimize the amount of variation between treated and control groups covariates. The ideal outcome are matches that do not differ in all other ways than the one that is being tested for, in this case wind turbine construction. 
+*Response:* The matching method is used to better fit the data for the fixed effect. Matching is done to minimize the amount of variation between treated and control groups covariates. The ideal outcome are matches that do not differ in all other ways than the one that is being tested for, in this case wind turbines within a 3km radius. 
 
 ------------------------------------------------------------------------
 
@@ -180,11 +179,11 @@ match_data |>
 
 **2B.Q1** Summarize the table output: Which covariates look balanced/imbalanced?
 
-*Response:* The covariates `log_home_val_07` and `log_median_inc` look balanced. The covariate `p_uni_degree` and `log_pop_denc` is imbalanced between the treatment and control group.
+*Response:* The covariates `log_home_val_07` and `log_median_inc` look balanced. The covariate `p_uni_degree` and `log_pop_denc` are imbalanced between the treatment and control group.
 
 **2B.Q2** Describe in your own words why these covariates might be expected to confound the treatment estimate: 
 
-*Response (2-4 sentences):* Some previous studies, as mentioned in Stokes (2015), have found that locations with less wealth are more likely to have less opposition to wind turbine projects. Additionally, wind turbines are more likely to be constructed in more rural areas with less space, and likely less population density. 
+*Response (2-4 sentences):* Some previous studies, as mentioned in Stokes (2015), have found that locations with less wealth are more likely to have less opposition to wind turbine projects. Additionally, wind turbines are more likely to be constructed in rural areas where more space is available, and where there is likely less population density. 
 
 ------------------------------------------------------------------------
 
@@ -274,7 +273,7 @@ love.plot(match_model, stats = "mean.diffs",
 
 **2D.Q1** Interpret the love plot in your own words:
 
-*Response:* The love plot clearly shows that the unadjusted covariate standardized mean differences are not within the threshold line of 0.1. Once the matching is completed the covariates adjusted standardized mean differences are within the threshold line of 0.1.
+*Response:* The love plot clearly shows that the unadjusted covariate standardized mean differences are not within the threshold line of 0.1. Once the matching is completed the covariates adjusted standardized mean differences are within the threshold line of 0.1. There is balance in the covariate balance after matching.
 
 ------------------------------------------------------------------------
 
@@ -342,15 +341,15 @@ summ(reg_match, model.fit = FALSE)
 
 **2F.Q1** Have you identified a causal estimate using this approach: Why or why not? 
 
-*Response:* Controlling for what is observable may not be enough to identify causal estimates. Confounding variables that are unobservable can be affecting the outcome of the change in liberal votes. 
+*Response:* Controlling for what is observable may not be enough to identify causal estimates. Confounding variables that are unobservable can be affecting the outcome of the change in liberal votes. Alternatively, the assumption of parallel trends and matching can be used to argue this is an apples-to-apples comparison. In my opinion, since parallel trends were identified and matching was completed this is as close to apples-to-apples comparison that is reasonably possible and a causal estimate can be identified.
 
 **2F.Q2** When using a matching method, what is the main threat to causal identification?
 
-*Response:* There may be unobserved confounding variables and therefore these variables would still be unmatched.
+*Response:* There may be unobserved confounding variables and therefore these variables would still be unmatched. This would lead to an imbalance in the data and would indicate that there is not an apples-to-apples comparison in this model. 
 
 **2F.Q3** Describe why the treatment estimate represents the `Average Treatment for the Treated (ATT)` and explain why this is the case relative to estimation of the `Average Treatment Effect (ATE)`.
 
-*Response:* This analysis is focused on estimating the treatment effect for treated observations only and does not make inferences based on the full sample making it the Average Treatment for the Treated (ATT). The Average Treatment Effect (ATE) would be representative of the full sample, both treatment and control groups. 
+*Response:* This analysis is focused on estimating the treatment effect for treated observations only and does not make inferences based on the full sample making it the Average Treatment for the Treated (ATT). The Average Treatment Effect (ATE) would be representative of the full sample, both treatment and control groups predicting the outcome if each group were treated. Since there are fundamental differences in the areas with wind turbines compared to areas where turbines are not proposed or operational an ATE cannot be calculated.
 
 ------------------------------------------------------------------------
 
@@ -395,7 +394,7 @@ paste0("There are ",length(unique(uniq_treated$precinct_id)), " unique precincts
 
 **3A.Q2:** How many unique precincts are *ever treated* (i.e., `proposed` & `operational`)?
 
-*Response:* There are 184 unique precincts treated as coded above. According to Stokes (2015), 184 precincts were treated with a proposal and 52 precincts had an operational turbine by 2011. All 52 precincts that have operational wind turbines also were also coded as having proposed turbines hence these values are not added together. 
+*Response:* There are 184 unique precincts treated as coded above. According to Stokes (2015), 184 precincts were treated with a proposal and 52 precincts had an operational turbine by 2011. All 52 precincts that have operational wind turbines were also coded as having proposed turbines hence these values are not added together. 
 
 ```{r}
 
@@ -542,13 +541,13 @@ summ(model1_ff, model.fit = FALSE, digits = 3, robust = TRUE)
 
 **3C.Q1:** Intuition check: Is the *signal-to-noise* ratio for the treatment estimate greater than *2-to-1*?
 
-*Response:* The signal here refers to the `Est` of the `beta1` while the `S.E.` of the `beta1`. Since the value is estimate is larger than double the standard error it is likely not significant. This is also supported by the `p-value` being larger than 0.05 which means it is not statistically significant.
+*Response:* The signal here refers to the `Est` of the `beta1` while the noise refers to the `S.E.` of the `beta1`. Since the estimate value is larger than double the standard error it is likely not significant. This is also supported by the `p-value` being larger than 0.05 which means it is not statistically significant. 
 
 > HINT: Add the argument `digits = 3` to the `summ()` function above
 
 **3C.Q2:** Re-run the `summ()` function using the *heteroscedasticiy robust standard error adjustment* (`robust = TRUE`). Did the standard error (S.E.) estimates change? Explain why. 
 
-*Response:* The standard error gets larger. 
+*Response:* The standard error gets larger because the estimates become more conservative. The standard errors get larger to account for the increased uncertainty. 
 
 **3C.Q3:** Compare results of the model above to the findings from the fixed effects analysis in the Stokes (2015) study. Why might the results be similar or different? 
 
@@ -556,7 +555,7 @@ summ(model1_ff, model.fit = FALSE, digits = 3, robust = TRUE)
 
 **3C.Q4:** In your own words, explain why it is advantageous from a causal inference perspective to include year and precinct fixed effects. Explain how **between-level** and **within-level** variance is relevant to the problem of omitted variable bias (OVB). 
 
-*Response (2-4 sentences):* There may be confounding variables based on year and precinct. For example, if a candidate is from a specific precinct that could influence more individuals to vote for them regardless of whether there are proposed or operational turbines. The year could also effect people's political views such as a possible increase in conservatism after the 2008 recession. 
+*Response (2-4 sentences):* There may be confounding variables based on year and precinct. For example, if a candidate is from a specific precinct that could influence more individuals to vote for them regardless of whether there are proposed or operational turbines. The year could also effect people's political views such as a possible increase in conservatism after the 2008 recession. Between-level variance is relevant in analyzing differences between different precincts while within-level variance is relevant in analyzing differences in one precinct in different years which are both important factors to include in the model to avoid any omitted variable biases. 
 
 ------------------------------------------------------------------------
 
@@ -576,7 +575,7 @@ summary(model2_ff, cluster = ~precinct_id) # adjusts the standard errors to acco
 
 In panel data settings, why is clustering by precinct important (i.e., `cluster = ~precinct_id`) ?”
 
-*Response (4-6 sentences):* Proposed turbines on average result in a 4% decrease in the percent of liberal votes per precinct when compared to the percent of liberal votes in precincts when no wind turbines are proposed. Clustering by `precinct_id` is important because it clusters the standard errors
+*Response (4-6 sentences):* Proposed turbines on average result in a 4% decrease in the percent of liberal votes per precinct when compared to the percent of liberal votes in precincts where no wind turbines are proposed. This finding is statistically significant. Clustering by `precinct_id` is important because it clusters the standard errors to account for non-independence. In this case, non-independence refers to the each precinct being observed for every year and the each year is dependent on the other years. 
 
 ------------------------------------------------------------------------
 
@@ -593,11 +592,11 @@ summary(model3_ff, cluster = ~precinct_id)
 
 **3E.Q1:** Interpret the `model3_ff` results as clearly and **concisely** as you can.
 
-*Response:* _________________________
+*Response:* Operational turbines on average result in a 9% decrease in the percent of liberal votes per precinct when compared to the percent of liberal votes in precincts with no operational wind turbines.
 
 **3E.Q2:** Why do you think the effect of proposed wind turbines is different from operational wind turbines. Develop your own theory about why incumbent vote share is affected in this way. Use the Stokes (2015) study to inform your response as needed. 
 
-*Response:* More people are aware of wind turbines once they are built. When wind turbines are only proposed those individuals that are most aware about public policy are the ones that may be swayed to vote against the Liberal party. When the world can see them standing more people may have negative sentiments about the actions of the Liberal party. This phenomenon was mentioned in Stokes (2015), as it was noted that people from different precincts could potentially see these turbines from their own communities and have a similar treatment to those that live within the precinct where turbines are placed. 
+*Response:* More people are aware of wind turbines once they are built. When wind turbines are only proposed those individuals that are most aware about public policy are the ones that may be swayed to vote against the Liberal party. When the world can see wind turbines standing, more people may have negative sentiments about the actions of the Liberal party. This phenomenon was mentioned in Stokes (2015), as it was noted that people from different precincts could potentially see these turbines from their own communities and have a similar treatment to those that live within the precinct where turbines are placed. 
 
 
 ------------------------------------------------------------------------
